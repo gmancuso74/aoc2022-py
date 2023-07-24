@@ -1,31 +1,30 @@
 import argparse
+from aocd.models import Puzzle
 
-def part1(filename):
+def part1(input):
   biggest=0
-  with open(filename) as f:
-    current=0
-    for line in f:
-      line=line.strip()
-      if(line.isdecimal()):
-        current+=int(line)
-        if(current>biggest):
-          biggest=current
-      else:
-        current=0
+  current=0
+  for line in input:
+    line=line.strip()
+    if(line.isdecimal()):
+      current+=int(line)
+      if(current>biggest):
+        biggest=current
+    else:
+      current=0
   return biggest
 
 
-def part2(filename):
+def part2(input):
   elves=[]
-  with open(filename) as f:
+  current=0
+  for line in input:
+    line=line.strip()
+    if(line.isdecimal()):
+      current+=int(line)
+    else:
+      elves.append(current)
       current=0
-      for line in f:
-        line=line.strip()
-        if(line.isdecimal()):
-          current+=int(line)
-        else:
-          elves.append(current)
-          current=0
   elves.sort()
   return sum(elves[-3:])
 
@@ -33,10 +32,13 @@ def part2(filename):
 parser = argparse.ArgumentParser(description='AOC 2022')
 parser.add_argument('-s', action='store_true' , help='use the small input file')
 args = parser.parse_args()
-filename='data/day1'
+puzzle = Puzzle(year=2022, day=1)
 if(args.s):
-  filename=filename+'.small'
-biggest=part1(filename)
-print(f'biggest: {biggest}')
-big3=part2(filename)
-print(f'big3: {big3}')
+  lines=puzzle.example_data.split('\n')
+else:
+  lines=puzzle.input_data.split('\n')
+
+biggest=part1(lines)
+print(f'part1: {biggest}')
+big3=part2(lines)
+print(f'part2: {big3}')
