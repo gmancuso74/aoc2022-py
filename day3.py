@@ -47,9 +47,9 @@ parser.add_argument('-s', action='store_true' , help='use the small input file')
 args = parser.parse_args()
 puzzle = Puzzle(year=2022, day=3)
 if(args.s):
-  lines=puzzle.example_data.split('\n')
+    lines = puzzle.examples[0].input_data.split('\n')
 else:
-  lines=puzzle.input_data.split('\n')
+    lines=puzzle.input_data.split('\n')
 
 part1=part1(lines)
 print(f'part1: {part1}')

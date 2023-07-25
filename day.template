@@ -16,12 +16,17 @@ def part2(input):
 
 parser = argparse.ArgumentParser(description='AOC 2022')
 parser.add_argument('-s', action='store_true' , help='use the small input file')
+parser.add_argument('-p', action='store_true', help='print the input data')
 args = parser.parse_args()
 puzzle = Puzzle(year=2022, day=___DAY___)
 if(args.s):
-  lines=puzzle.example_data.split('\n')
+    lines = puzzle.examples[0].input_data.split('\n')
 else:
-  lines=puzzle.input_data.split('\n')
+    lines=puzzle.input_data.split('\n')
+
+if(args.p):
+  for line in lines:
+    print(line, end='\n')
 
 part1=part1(lines)
 print(f'part1: {part1}')
