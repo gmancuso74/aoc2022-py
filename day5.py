@@ -1,10 +1,25 @@
-import argparse
 from Models import Solution
 from aocd.models import Puzzle
 
+
 class Day5(Solution):
+    
     def __init__(self):
         super().__init__(day=5)
+        self.stacks = None
+        self.moves = None
+        process_moves = False
+        for line in self.input():
+            line = line.rstrip('\n')
+            if not line:
+                print('blank line')
+                process_moves = True
+                continue
+
+            if process_moves:
+                self.process_move_line(line)
+            else:
+                self.process_stack_line(line)
 
     stacks: list
     moves: list
@@ -42,27 +57,12 @@ class Day5(Solution):
             else:
                 print('    ', end='')
 
-    def __init__(self):
-        self.stacks = None
-        self.moves = None
-        process_moves = False
-        for line in self.input():
-            line = line.rstrip('\n')
-            if not line:
-                print('blank line')
-                process_moves = True
-                continue
-
-            if process_moves:
-                self.process_move_line(line)
-            else:
-                self.process_stack_line(line)
 
     def part1(self):
         result = 0
-        self.printStacks()
+        input.printStacks()
         for line in input.moves:
-            self.processMove(line)
+            input.processMove(line)
         return result
 
     def part2(self):
@@ -71,12 +71,8 @@ class Day5(Solution):
             line = line.strip()
         return result
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='AOC 2022')
-    parser.add_argument('-s', action='store_true', help='use the small input file')
-    args = parser.parse_args()
-    day=Day5()
-    if args.s:
-        day.useShort=True
 
+
+if __name__ == '__main__':
+    day=Day5()
     day.printResults()

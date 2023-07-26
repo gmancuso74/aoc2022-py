@@ -1,6 +1,4 @@
-import argparse
 from Models import Solution
-from aocd.models import Puzzle
 
 class Day4(Solution):
 
@@ -39,11 +37,5 @@ class Day4(Solution):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='AOC 2022')
-    parser.add_argument('-s', action='store_true', help='use the small input file')
-    args = parser.parse_args()
     day=Day4()
-    if (args.s): 
-        day.useShort=True
-
     day.printResults()
