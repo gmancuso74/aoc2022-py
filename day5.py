@@ -1,9 +1,11 @@
 import argparse
-
+from Models import Solution
 from aocd.models import Puzzle
 
+class Day5(Solution):
+    def __init__(self):
+        super().__init__(day=5)
 
-class Crane:
     stacks: list
     moves: list
 
@@ -40,11 +42,11 @@ class Crane:
             else:
                 print('    ', end='')
 
-    def __init__(self, lines: list):
+    def __init__(self):
         self.stacks = None
         self.moves = None
         process_moves = False
-        for line in lines:
+        for line in self.input():
             line = line.rstrip('\n')
             if not line:
                 print('blank line')
@@ -56,38 +58,25 @@ class Crane:
             else:
                 self.process_stack_line(line)
 
+    def part1(self):
+        result = 0
+        self.printStacks()
+        for line in input.moves:
+            self.processMove(line)
+        return result
 
-def part1(input):
-    result = 0
-    input.printStacks()
-    for line in input.moves:
-        input.processMove(line)
-    return result
+    def part2(self):
+        result = 0
+        for line in input:
+            line = line.strip()
+        return result
 
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='AOC 2022')
+    parser.add_argument('-s', action='store_true', help='use the small input file')
+    args = parser.parse_args()
+    day=Day5()
+    if args.s:
+        day.useShort=True
 
-def part2(input):
-    result = 0
-    for line in input:
-        line = line.strip()
-    return result
-
-
-parser = argparse.ArgumentParser(description='AOC 2022')
-parser.add_argument('-s', action='store_true', help='use the small input file')
-parser.add_argument('-p', action='store_true', help='print the input data')
-args = parser.parse_args()
-puzzle = Puzzle(year=2022, day=5)
-if (args.s):
-    lines = puzzle.examples[0].input_data.split('\n')
-else:
-    lines = puzzle.input_data.split('\n')
-
-if (args.p):
-    for line in lines:
-        print(line, end='\n')
-
-crane = Crane(lines)
-part1 = part1(crane)
-print(f'part1: {part1}')
-part2 = part2(crane)
-print(f'part2: {part2}')
+    day.printResults()
