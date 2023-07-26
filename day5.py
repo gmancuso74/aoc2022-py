@@ -1,45 +1,61 @@
 from Models import Solution
+import re
 from aocd.models import Puzzle
+
+class Move:
+    regex=re.compile(r'move (\d+) from (\d+) to (\d+)')
+    moveFrom: int
+    moveTo: int
+    count: int
+    def __init__(self,line):
+        matches=Move.regex.match(line)
+        if not matches:
+            raise Exception (f'No matches found on Move line {line}')
+        groups=matches.groups()
+        (self.count,self.moveFrom,self.moveTo)=map(int,groups)
 
 
 class Day5(Solution):
+
     
     def __init__(self):
         super().__init__(day=5)
-        self.stacks = None
-        self.moves = None
+        self.stacks = list()
+        self.moves = []
         process_moves = False
         for line in self.input():
             line = line.rstrip('\n')
             if not line:
-                print('blank line')
                 process_moves = True
                 continue
 
             if process_moves:
-                self.process_move_line(line)
+                self.parse_move_line(line)
             else:
-                self.process_stack_line(line)
+                self.parse_stack_line(line)
 
-    stacks: list
+    stacks: list[list[str]]
     moves: list
 
-    def process_move_line(self, line):
-        print(f'process move line {line}')
+    def parse_move_line(self, line):
+        move=Move(line)
+        self.moves.append(move)
         return
 
-    def process_stack_line(self, line):
-        if self.stacks is None:
+    def parse_stack_line(self, line):
+        print(line)
+        if len(self.stacks) == 0:
             cols=int((len(line)+1)/4)
-            self.stacks = list(list([None]) * cols)
+            self.stacks.append(list([]) * cols)
             for i in range(0,cols):
-                self.stacks[i]=list()
+                self.stacks.append(list())
         idx = 0
         stack_idx = 1
         col = 0
         for char in line:
             if idx % 4 == 1:
-                self.stacks[col].insert(0, char)
+                if(char!=' '):
+                    self.stacks[col].insert(0, char)
                 col = col + 1
             idx = idx + 1
         return
@@ -49,28 +65,31 @@ class Day5(Solution):
         cols = len(self.stacks)
         for row in range(rows-1,-1,-1):
             for col in self.stacks:
-                if len(col) >= row:
+                if len(col) > row:
                     print(f' [{col[row]}]', end='')
                 else:
                     print('    ', end='')
             print()
         print("===========================")
 
+    def processMove(self,move):
+        for i in range(move.count):
+            val=self.stacks[move.moveFrom].pop()
+            self.stacks[move.moveTo].append(val)
+            self.printStacks()
+
+
 
     def part1(self):
         result = 0
-        input.printStacks()
-        for line in input.moves:
-            input.processMove(line)
+        self.printStacks()
+        for line in self.moves:
+            self.processMove(line)
         return result
 
     def part2(self):
         result = 0
-        for line in input:
-            line = line.strip()
         return result
-
-
 
 if __name__ == '__main__':
     day=Day5()
