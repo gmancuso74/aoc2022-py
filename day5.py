@@ -34,14 +34,11 @@ class Day5(Solution):
             self.stacks = list(list([None]) * cols)
             for i in range(0,cols):
                 self.stacks[i]=list()
-        print(f'process stack line {line}')
-        self.printStacks()
         idx = 0
         stack_idx = 1
         col = 0
         for char in line:
             if idx % 4 == 1:
-                print(f'{char}', end='')
                 self.stacks[col].insert(0, char)
                 col = col + 1
             idx = idx + 1
@@ -50,12 +47,14 @@ class Day5(Solution):
     def printStacks(self):
         rows = max(map(len, self.stacks))
         cols = len(self.stacks)
-        cur_row = rows - 1
-        for col in self.stacks:
-            if len(col) >= cur_row:
-                print(f' [{col[cur_row]}]', end='')
-            else:
-                print('    ', end='')
+        for row in range(rows-1,-1,-1):
+            for col in self.stacks:
+                if len(col) >= row:
+                    print(f' [{col[row]}]', end='')
+                else:
+                    print('    ', end='')
+            print()
+        print("===========================")
 
 
     def part1(self):
