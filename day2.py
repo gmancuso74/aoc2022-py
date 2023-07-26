@@ -1,6 +1,4 @@
-import argparse
 from Models import Solution
-from aocd.models import Puzzle
 
 from enum import Enum
 class RPS(Enum):
@@ -39,6 +37,7 @@ class Day2(Solution):
 			case 'X'|'A':
 				return RPS.Rock
 			case 'Y'|'B':
+				return RPS.Paper
 				return RPS.Paper
 			case 'Z'|'C':
 				return RPS.Scissors
@@ -91,12 +90,6 @@ class Day2(Solution):
 
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='AOC 2022')
-	parser.add_argument('-s', action='store_true' , help='use the small input file')
-	args = parser.parse_args()
 	day=Day2()
-	if(args.s):
-		day.useShort=True
-
 	day.printResults()
 
