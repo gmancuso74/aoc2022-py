@@ -16,7 +16,7 @@ class Solution(object):
 			return self.puzzle.input_data.split('\n')
 
 	def printResults(self):
-		self.result1=str(self.part1())
-		self.result2=str(self.part2())
+		self.result1=str(self.part1()) # type: ignore
+		self.result2=str(self.part2()) # type: ignore
 		print(f'Day {self.day}:\t{self.result1}\t{self.result2}')
 

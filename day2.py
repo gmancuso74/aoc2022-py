@@ -7,12 +7,13 @@ class RPS(Enum):
   Rock = 1
   Paper = 2
   Scissors = 3
+  
 class Day2(Solution):
 	def __init__(self):
 		super().__init__(day=2)
 
 
-	def get_score(self,left,right):
+	def get_score(self,left:RPS,right:RPS):
 		score=right.value
 		match left:
 			case RPS.Rock:
@@ -30,15 +31,20 @@ class Day2(Solution):
 					case RPS.Rock: return score+6
 					case RPS.Paper: return score+0
 					case RPS.Scissors: return score+3
+			case _:
+				return score
 
 	def get_play(self,value):
 		match value:
 			case 'X'|'A':
 				return RPS.Rock
 			case 'Y'|'B':
-			  return RPS.Paper
+				return RPS.Paper
 			case 'Z'|'C':
-			  return RPS.Scissors
+				return RPS.Scissors
+			case _:
+				raise Exception("No Play")
+			
 
 	def part1(self):
 		score=0
@@ -56,16 +62,21 @@ class Day2(Solution):
 					case 'X': return RPS.Scissors #lose
 					case 'Y': return RPS.Rock #draw
 					case 'Z': return RPS.Paper #win
+					case _: raise Exception("No Play")
 			case RPS.Paper:
 				match right:
 					case 'X': return RPS.Rock
 					case 'Y': return RPS.Paper
 					case 'Z': return RPS.Scissors
+					case _: raise Exception("No Play")
 			case RPS.Scissors:
 				match right:
 					case 'X': return RPS.Paper
 					case 'Y': return RPS.Scissors
 					case 'Z': return RPS.Rock
+					case _: raise Exception("No Play")
+			case _:
+				raise Exception("No Play")
 
 	def part2(self):
 		score=0
@@ -75,7 +86,7 @@ class Day2(Solution):
 			left_play=self.get_play(left)
 			right_play=self.get_part2_play(left_play,right)
 			round_score=self.get_score(left_play,right_play)
-			score+=round_score
+			score = score + round_score
 		return score
 
 
