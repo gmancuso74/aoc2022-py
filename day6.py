@@ -1,9 +1,9 @@
 from Models import Solution
 
-class Day___DAY___(Solution):
+class Day6(Solution):
 
     def __init__(self):
-        super().__init__(day=___DAY___)
+        super().__init__(day=6)
 
     def part1(self):
         for line in self.input():
@@ -15,5 +15,5 @@ class Day___DAY___(Solution):
         return 0
 
 if __name__ == '__main__':
-    day=Day___DAY___()
+    day=Day6()
     day.printResults()

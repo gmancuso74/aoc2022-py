@@ -1,6 +1,5 @@
 from Models import Solution
 import re
-from aocd.models import Puzzle
 
 class Move:
     regex=re.compile(r'move (\d+) from (\d+) to (\d+)')
