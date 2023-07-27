@@ -16,7 +16,6 @@ class Move:
 
 
 class Day5(Solution):
-
     
     def __init__(self):
         super().__init__(day=5)
@@ -46,7 +45,7 @@ class Day5(Solution):
         print(line)
         if len(self.stacks) == 0:
             cols=int((len(line)+1)/4)
-            self.stacks.append(list([]) * cols)
+            #self.stacks.append(list([]) * cols)
             for i in range(0,cols):
                 self.stacks.append(list())
         idx = 0
@@ -70,22 +69,27 @@ class Day5(Solution):
                 else:
                     print('    ', end='')
             print()
-        print("===========================")
+        print(f'{len(self.stacks)}===========================')
 
     def processMove(self,move):
         for i in range(move.count):
-            val=self.stacks[move.moveFrom].pop()
-            self.stacks[move.moveTo].append(val)
-            self.printStacks()
+            val=self.stacks[move.moveFrom-1].pop()
+            self.stacks[move.moveTo-1].append(val)
+            #self.printStacks()
 
-
+    def tops(self):
+        result=''
+        for col in self.stacks:
+            this_char=col[-1]
+            if not this_char: raise Exception(f'No Top for column {col}')
+            result = result + this_char
+        return result
 
     def part1(self):
-        result = 0
-        self.printStacks()
+        result = ''
         for line in self.moves:
             self.processMove(line)
-        return result
+        return self.tops()
 
     def part2(self):
         result = 0
