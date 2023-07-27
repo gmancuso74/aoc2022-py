@@ -21,6 +21,14 @@ class Day5(Solution):
         super().__init__(day=5)
         self.stacks = list()
         self.moves = []
+        self.load()
+
+    stacks: list[list[str]]
+    moves: list
+
+    def load(self):
+        self.stacks = list()
+        self.moves = []
         process_moves = False
         for line in self.input():
             line = line.rstrip('\n')
@@ -33,16 +41,12 @@ class Day5(Solution):
             else:
                 self.parse_stack_line(line)
 
-    stacks: list[list[str]]
-    moves: list
-
     def parse_move_line(self, line):
         move=Move(line)
         self.moves.append(move)
         return
 
     def parse_stack_line(self, line):
-        print(line)
         if len(self.stacks) == 0:
             cols=int((len(line)+1)/4)
             #self.stacks.append(list([]) * cols)
@@ -77,6 +81,12 @@ class Day5(Solution):
             self.stacks[move.moveTo-1].append(val)
             #self.printStacks()
 
+    def processMove2(self,move):
+            rangeCount=-1*move.count
+            subrange=self.stacks[move.moveFrom-1][rangeCount:]
+            del self.stacks[move.moveFrom-1][rangeCount:]
+            self.stacks[move.moveTo-1].extend(subrange)
+
     def tops(self):
         result=''
         for col in self.stacks:
@@ -92,8 +102,11 @@ class Day5(Solution):
         return self.tops()
 
     def part2(self):
-        result = 0
-        return result
+        self.load() #reset to input
+        result = ''
+        for line in self.moves:
+            self.processMove2(line)
+        return self.tops()
 
 if __name__ == '__main__':
     day=Day5()
