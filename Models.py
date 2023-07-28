@@ -22,7 +22,7 @@ class Solution(object):
 		if(self.args.p): self.printInput=True
 		if(self.args.w):
 			filename=f'data/day{self.day}'
-			if not args.s:
+			if not self.args.s:
 				with open(filename,'w') as datafile:
 					datafile.write(self.puzzle.input_data)
 			else:
