@@ -5,6 +5,7 @@ class Solution(object):
 	useShort: bool
 	printInput: bool
 	args:object
+	parser = argparse.ArgumentParser(description='AOC 2022')
 
 	def __init__(self,day):
 		self.day=day
@@ -13,14 +14,13 @@ class Solution(object):
 		self.result1=None
 		self.result2=None
 		self.puzzle=Puzzle(year=2022, day=self.day)
-		parser = argparse.ArgumentParser(description='AOC 2022')
-		parser.add_argument('-s', action='store_true', help='use the small input file')
-		parser.add_argument('-p', action='store_true', help='print the input')
-		parser.add_argument('-w', action='store_true', help='Write input file to data/')
-		args = parser.parse_args()
-		if(args.s): self.useShort=True
-		if(args.p): self.printInput=True
-		if(args.w):
+		self.parser.add_argument('-s', action='store_true', help='use the small input file')
+		self.parser.add_argument('-p', action='store_true', help='print the input')
+		self.parser.add_argument('-w', action='store_true', help='Write input file to data/')
+		self.args = self.parser.parse_args()
+		if(self.args.s): self.useShort=True
+		if(self.args.p): self.printInput=True
+		if(self.args.w):
 			filename=f'data/day{self.day}'
 			if not args.s:
 				with open(filename,'w') as datafile:
