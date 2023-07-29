@@ -81,21 +81,40 @@ class Day7(Solution):
         for child in node.children:
             self.print_tree(child,depth+1)
         
-    def dir_print(self,node:Node, depth:int =0):
+    def do_part1(self,node:Node, depth:int =0)->int:
+        result=0
         if(node.type==Type.D):
-            d_tabs=' '*depth
-            print (f'{d_tabs}+{node.name}: {node.get_size()}')
-        for child in node.children:
-            self.dir_print(child,depth+1)
+            size=node.get_size()
+            if(size<100000):
+                result=result+size
+            for child in node.children:
+                result=result+self.do_part1(child,depth+1)
+            return result
+        else:
+            return 0
+
+    def do_part2(self,node:Node, candidates:list[Node])->list[Node]:
+        unused=70_000_000-self.root.get_size()
+        size_needed=30_000_000-unused
+        if(node.type==Type.D):
+            size=node.get_size()
+            if(size>=size_needed):
+                candidates.append(node)
+            for child in node.children:
+                self.do_part2(child,candidates)
+            return candidates
+        else:
+            return candidates
 
     def part1(self):
         for line in self.input():
             self.process(line)
-        self.print_tree(self.root)
-        return 0
+        #self.print_tree(self.root)
+        return self.do_part1(self.root)
 
     def part2(self):
-        return 0
+        node=sorted(self.do_part2(self.root,list()),key=Node.get_size)[0]
+        return node.get_size()
 
 if __name__ == '__main__':
     day = Day7()
