@@ -42,12 +42,12 @@ def test_enumByKeys():
 
 def test_move_left():
     line='L 4'
-    day.head=(0,0)
-    day.tail=(0,0)
+    for knot in day.p1Rope:
+        knot=(0,0)
     moves=get_moves(line)
     day.part1_move(moves)
-    assert day.head[0]==-4
-    assert day.tail[0]==-3
+    assert day.p1Rope[0][0]==-4
+    assert day.p1Rope[-1][0]==-3
 
 def test_moves():
     line='R 4'
