@@ -14,13 +14,13 @@ class Solution(object):
 		self.result1=None
 		self.result2=None
 		self.puzzle=Puzzle(year=2022, day=self.day)
-		self.parser.add_argument('-short', action='store_true', help='use the small input file')
-		self.parser.add_argument('-print', action='store_true', help='print the input')
-		self.parser.add_argument('-write', action='store_true', help='Write input file to data/')
+		self.parser.add_argument('-s', action='store_true', help='use the small input file')
+		self.parser.add_argument('-p', action='store_true', help='print the input')
+		self.parser.add_argument('-w', action='store_true', help='Write input file to data/')
 		self.args,unknown = self.parser.parse_known_args()
-		if(self.args.short): self.useShort=True
-		if(self.args.print): self.printInput=True
-		if(self.args.write):
+		if(self.args.s): self.useShort=True
+		if(self.args.p): self.printInput=True
+		if(self.args.w):
 			filename=f'data/day{self.day}'
 			if not self.args.s:
 				with open(filename,'w') as datafile:
