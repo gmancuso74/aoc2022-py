@@ -42,31 +42,31 @@ def test_enumByKeys():
 
 def test_move_left():
     line='L 4'
-    for knot in day.p1Rope:
+    for knot in day.rope:
         knot=(0,0)
     moves=get_moves(line)
-    day.part1_move(moves)
-    assert day.p1Rope[0][0]==-4
-    assert day.p1Rope[-1][0]==-3
+    day.do_move(moves,day.visited)
+    assert day.rope[0][0]==-4
+    assert day.rope[-1][0]==-3
 
 def test_moves():
     line='R 4'
-    day.head=(0,0)
-    day.tail=(0,0)
+    day.rope[0]=(0,0)
+    day.rope[1]=(0,0)
     moves=get_moves(line)
     assert 4==len(moves)
     assert all([x==Dir.R.value for x in moves])
-    assert day.head==(0,0)
-    assert day.tail==(0,0)
-    day.part1_move(moves)
+    assert day.rope[0]==(0,0)
+    assert day.rope[1]==(0,0)
+    day.do_move(moves, day.visited)
     day.printGrid()
-    assert day.head==(4,0), f'head should be (4,0)'
-    assert day.tail==(3,0), f'tail should be (3,0)'
+    assert day.rope[0]==(4,0), f'head should be (4,0)'
+    assert day.rope[1]==(3,0), f'tail should be (3,0)'
     line='L 4'
     moves=get_moves(line)
     assert 4==len(moves)
     assert all([x==Dir.L.value for x in moves])
-    day.part1_move(moves)
-    assert day.head==(0,0), f'head should be (0,0)'
-    assert day.tail==(1,0), f'tail should be (1,0)'
+    day.do_move(moves,day.visited)
+    assert day.rope[0]==(0,0), f'head should be (0,0)'
+    assert day.rope[1]==(1,0), f'tail should be (1,0)'
 

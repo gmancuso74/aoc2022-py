@@ -89,11 +89,22 @@ class Day10(Solution):
         valid=range(pixie-1,pixie+2)
         return('#') if cycle in valid else '.'
     
+    def part2_debug(self,cycle:int, results:list[tuple[Command,int]]):
+        pixie=self.value_at(cycle,results)
+        valid=range(pixie-1,pixie+2)
+        print('Sprite Position:  ')
+        for i in range(0,41):
+            print('#' if i in valid else '.',end='')
+        print()
+
     def part2(self):
-        display=list(' '*240)
-        for i in range(240):
-            display[i]=self.get_pixel(i,self.result)
-        self.print_display(display)
+        display=list(' '*241)
+        with open('day10.debug','w') as datafile:
+            for i in range(0,241):
+                display[i]=self.get_pixel(i+1,self.result)
+                pixie=self.value_at(i,self.result)
+                datafile.write(f'{i}: {range(pixie-1,pixie+2)}\n')
+            self.print_display(display)
         return 0
 
 if __name__ == '__main__':

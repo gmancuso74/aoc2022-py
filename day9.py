@@ -29,7 +29,7 @@ class Day9(Solution):
     miny:int
     maxx:int
     maxy:int
-    p1Rope:list[tuple[int,int]]
+    rope:list[tuple[int,int]]
     p2Rope:list[tuple[int,int]]
 
     def __init__(self):
@@ -38,7 +38,7 @@ class Day9(Solution):
         self.visited.add((0,0))
         self.visited2=set()
         self.visited2.add((0,0))
-        self.p1Rope=[(0,0)]*2
+        self.rope=list()
         self.p2Rope=[(0,0)]*10
         self.minx=0
         self.maxx=5
@@ -52,8 +52,8 @@ class Day9(Solution):
             if(self.miny>knot[1]): self.miny=knot[1]
             if(self.maxy<knot[1]): self.maxy=knot[1]
 
-    def part1_move(self,moves:list[tuple[int,int]]):
-        self.do_move(self.p1Rope,moves, self.visited)
+    # def part1_move(self,moves:list[tuple[int,int]]):
+    #     self.do_move(self.rope,moves, self.visited)
         # for move in moves:
         #     self.p1Rope[0] = apply(self.p1Rope[0],move)
         #     self.check_max(self.p1Rope)  #using head because tail will always be inside of head's bounds
@@ -69,7 +69,8 @@ class Day9(Solution):
         #             self.p1Rope[1]=apply(self.p1Rope[1],(x,y))
         #     self.visited.add(self.p1Rope[1])
 
-    def do_move(self,rope:list[tuple[int,int]],moves:list[tuple[int,int]],visited:set[tuple[int,int]]):
+    def do_move(self,moves:list[tuple[int,int]],visited:set[tuple[int,int]]):
+        rope=self.rope
         for move in moves:
             rope[0] = apply(rope[0],move)
             for i in range(1,len(rope)):
@@ -85,12 +86,12 @@ class Day9(Solution):
                         rope[i]=apply(rope[i],(x,y))
             visited.add(rope[-1])
 
-    def part2_move(self,moves:list[tuple[int,int]]):
-        self.do_move(self.p2Rope,moves, self.visited2)
+    # def part2_move(self,moves:list[tuple[int,int]]):
+    #     self.do_move(self.p2Rope,moves, self.visited2)
 
     def printGrid(self,part:int=1):
         if part==1:
-            rope=self.p1Rope
+            rope=self.rope
             myvisited=self.visited
         else:
             rope=self.p2Rope
@@ -114,15 +115,17 @@ class Day9(Solution):
             print()
 
     def part1(self):
+        self.rope=[(0,0)]*2
         for line in self.input():
-            self.part1_move(get_moves(line))
+            self.do_move(get_moves(line),self.visited)
             # self.printGrid()
         return len(self.visited)
 
     def part2(self):
+        self.rope=[(0,0)]*10
         for line in self.input():
             # print(line)
-            self.part2_move(get_moves(line))
+            self.do_move(get_moves(line),self.visited2)
             # self.printGrid(2)
         return len(self.visited2)
 
